@@ -11,8 +11,6 @@ namespace ProductCatalog.Repo.EntityConfiguration
             builder.Property(p => p.Name)
                .IsRequired()
                .HasMaxLength(50);
-
-            
         }
     }
 }

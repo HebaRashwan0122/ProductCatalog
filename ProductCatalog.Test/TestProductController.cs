@@ -1,5 +1,4 @@
-﻿using Autofac.Core;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -36,8 +35,7 @@ namespace ProductCatalog.Test
 
             // Assert
             Assert.IsType<ViewResult>(result);
-            //var viewResult = Assert.IsType<ViewResult>(result);
-            //Assert.NotNull(viewResult.ViewData.Model);
+           
         }
 
         private List<SelectListItem> GetCategoriesList()

@@ -44,7 +44,6 @@ namespace ProductCatalog.Web.Controllers
                     }
                 }
             }
-            
             return View(model);
         }
 

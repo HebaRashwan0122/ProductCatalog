@@ -10,18 +10,9 @@ namespace ProductCatalog.Repo
     public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-
-        }
+        {}
         public ApplicationDbContext()
-        {
-            
-        }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-E5HQPQSL\SQLEXPRESS;Initial Catalog=ProductCatalogDB;Integrated Security=True;Trust Server Certificate=True");
-        //}
+        {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,11 +43,6 @@ namespace ProductCatalog.Repo
 
             #endregion
         }
-
-        //void SaveChanges()
-        //{
-        //    base.SaveChanges();
-        //}
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }

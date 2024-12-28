@@ -36,6 +36,7 @@ namespace ProductCatalog.Web.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
                     await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Login");
                 }
                 foreach (var error in result.Errors) 
                 {
@@ -48,7 +49,7 @@ namespace ProductCatalog.Web.Controllers
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
-            return View("Register");
+            return RedirectToAction("Login");
         }
 
         public IActionResult Login()

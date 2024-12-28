@@ -1,4 +1,5 @@
-﻿using ProductCatalog.Data.Entities;
+﻿using Microsoft.Extensions.Logging;
+using ProductCatalog.Data.Entities;
 using ProductCatalog.Repo;
 using ProductCatalog.Service.ViewModels;
 
@@ -7,112 +8,166 @@ namespace ProductCatalog.Service
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        
-        public ProductService(IProductRepository productRepository)
+        private readonly ILogger<ProductService> _logger;
+        public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
         {
             _productRepository = productRepository;
+            _logger = logger;
         }
 
         public List<ProductListViewModel> GetAllProducts()
         {
-            var products = _productRepository.GetAll().Select(p => new ProductListViewModel
+            try
             {
-                Id = p.Id,
-                Name = p.Name,
-                CreationDate= p.CreationDate,
-                DurationInHours= p.DurationInHours,
-                Img= p.Img,
-                Price= p.Price,
-                StartDate= p.StartDate
+                var products = _productRepository.GetAll().Select(p => new ProductListViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CreationDate = p.CreationDate,
+                    DurationInHours = p.DurationInHours,
+                    Img = p.Img,
+                    Price = p.Price,
+                    StartDate = p.StartDate
 
-            }).ToList();
-            return products;
+                }).ToList();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error {ex.Message}");
+                return new List<ProductListViewModel>();
+            }
         }
 
         public ProductEditViewModel GetProductById(int id)
         {
-            var product =_productRepository.GetById(id);
-            var model = new ProductEditViewModel();
-            if (product!=null)
+            try
             {
-                model = new ProductEditViewModel
+                var product = _productRepository.GetById(id);
+                var model = new ProductEditViewModel();
+                if (product != null)
                 {
-                    Id= product.Id,
-                    Name= product.Name,
-                    DurationInHours= product.DurationInHours,
-                    Price= product.Price,
-                    StartDate= product.StartDate
-                };
+                    model = new ProductEditViewModel
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        DurationInHours = product.DurationInHours,
+                        Price = product.Price,
+                        StartDate = product.StartDate
+                    };
+                }
+                return model;
             }
-            return model;
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error {ex.Message}");
+                return null;
+            }
         }
 
         public ProductDetailsViewModel GetProductDetails(int id)
         {
-            var product=_productRepository.GetById(id);
-            if (product!=null)
+            try
             {
-                var model = new ProductDetailsViewModel
+                var product = _productRepository.GetById(id);
+                if (product != null)
                 {
-                    Id=id,
-                    Name = product.Name,
-                    Price= product.Price,
-                    Img = product.Img
-                };
-                return model;
+                    var model = new ProductDetailsViewModel
+                    {
+                        Id = id,
+                        Name = product.Name,
+                        Price = product.Price,
+                        Img = product.Img
+                    };
+                    return model;
+                }
+                return null;
             }
-            return null;
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error {ex.Message}");
+                return null;
+            }
         }
 
         public List<ProductListViewModel> GetProductsByCategoryId(int categoryId)
         {
-            var products = _productRepository.GetByCategoryId(categoryId).Select(p => new ProductListViewModel
+            try
             {
-                Id = p.Id,
-                Name = p.Name,
-                CreationDate = p.CreationDate,
-                DurationInHours = p.DurationInHours,
-                Img = p.Img,
-                Price = p.Price,
-                StartDate = p.StartDate
+                var products = _productRepository.GetByCategoryId(categoryId).Select(p => new ProductListViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CreationDate = p.CreationDate,
+                    DurationInHours = p.DurationInHours,
+                    Img = p.Img,
+                    Price = p.Price,
+                    StartDate = p.StartDate
 
-            }).ToList();
-            return products;
+                }).ToList();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error {ex.Message}");
+                return null;
+            }
         }
 
         public void InsertProduct(ProductCreateViewModel productVM)
         {
-            var product = new Product
+            try
             {
-                Name= productVM.Name,
-                StartDate=productVM.StartDate,
-                DurationInHours=productVM.DurationInHours,
-                Price=productVM.Price,
-                CategoryId=productVM.SelectedCategory,
-                CreationDate=DateTime.Now,
-                CreatedBy=productVM.CreatedBy,
-                Img =productVM.Img
-            };
-            _productRepository.Insert(product);
+                var product = new Product
+                {
+                    Name = productVM.Name,
+                    StartDate = productVM.StartDate,
+                    DurationInHours = productVM.DurationInHours,
+                    Price = productVM.Price,
+                    CategoryId = productVM.SelectedCategory,
+                    CreationDate = DateTime.Now,
+                    CreatedBy = productVM.CreatedBy,
+                    Img = productVM.Img
+                };
+                _productRepository.Insert(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error {ex.Message}");
+            }
         }
 
         public void UpdateProduct(int id,ProductEditViewModel model)
         {
-            var product = new Product
+            try
             {
-                Name= model.Name,
-                StartDate= model.StartDate,
-                DurationInHours=model.DurationInHours,
-                Price=model.Price
-            };
-            _productRepository.Update(id, product);
+                var product = new Product
+                {
+                    Name = model.Name,
+                    StartDate = model.StartDate,
+                    DurationInHours = model.DurationInHours,
+                    Price = model.Price
+                };
+                _productRepository.Update(id, product);
+            }
+            catch (Exception ex)
+            {
+               _logger.LogError($"Error {ex.Message}");
+            }
         }
 
 
         public void DeleteProduct(int id)
         {
-            _productRepository.Delete(id);
-        }
+            try
+            {
+                _productRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error {ex.Message}");
+            }
 
+        }
     }
 }

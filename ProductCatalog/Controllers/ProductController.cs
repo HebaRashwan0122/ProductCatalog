@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ProductCatalog.Service;
 using ProductCatalog.Service.ViewModels;
 using System.Security.Claims;
@@ -77,7 +76,6 @@ namespace ProductCatalog.Web.Controllers
                     }
                 }
             }
-
             if (ModelState.IsValid)
             {
                  model.CreatedBy= HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -85,7 +83,6 @@ namespace ProductCatalog.Web.Controllers
                 return RedirectToAction("Index");
             }
             model.CategoriesList = _categoryService.GetAllCategories();
-                
             return View(model);
         }
 
@@ -109,7 +106,8 @@ namespace ProductCatalog.Web.Controllers
             if (ModelState.IsValid)
             {
                 _productService.UpdateProduct(id, model);
-                _logger.LogInformation($"update to product at {DateTime.Now}");
+                 var currentUser = HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                _logger.LogInformation($"update to product by {currentUser} at {DateTime.Now}");
                 
                 return RedirectToAction("Index");
             }

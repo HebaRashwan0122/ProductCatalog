@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProductCatalog.Data.Auth;
 using ProductCatalog.Repo;
 using ProductCatalog.Service;
 using ProductCatalog.Web.Controllers;
-using System.Configuration;
 
 namespace ProductCatalog
 {
@@ -22,30 +20,20 @@ namespace ProductCatalog
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.
-       UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                  UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            //builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
 
-            //builder.Services.AddAuthentication();
 
             builder.Services.AddSingleton<ILogger<ProductController>, Logger<ProductController>>();
-            // Add services to the container.
-            //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
-
-            //options.UseSqlServer(connectionString));
+            
             builder.Services.AddLogging();
 
-            
-
             builder.Services.AddControllersWithViews();
-
-                
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

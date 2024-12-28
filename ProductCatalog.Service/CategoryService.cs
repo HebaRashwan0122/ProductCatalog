@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using ProductCatalog.Repo;
-using ProductCatalog.Service.ViewModels;
 
 namespace ProductCatalog.Service
 {
