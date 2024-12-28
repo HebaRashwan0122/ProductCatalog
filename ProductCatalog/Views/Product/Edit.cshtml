@@ -1,0 +1,45 @@
+﻿@model ProductCatalog.Service.ViewModels.ProductEditViewModel
+
+<div class="container p-3 my-3 border">
+    <h1>Edit Product</h1>
+    <div class="row">
+        <div class="col-sm-6">
+            <hr />
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="Id"/>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DurationInHours" class="control-label"></label>
+                    <input asp-for="DurationInHours" class="form-control" />
+                    <span asp-validation-for="DurationInHours" class="text-danger"></span>
+                </div>
+
+               
+                
+                <br /><br />
+
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Save" />
+                    <a class="btn btn-danger" asp-action="Index">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

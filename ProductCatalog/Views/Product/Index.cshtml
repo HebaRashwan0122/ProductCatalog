@@ -1,0 +1,83 @@
+﻿@model ProductCatalog.Service.ViewModels.ProductIndexViewModel
+
+@* @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} *@
+
+<h1>Products List</h1>
+
+<p style="text-align:right;margin-right:20px;">
+    <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+</p>
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Post))
+{
+
+    <span>Category Name:</span> 
+    @Html.DropDownList("searchCategory", Model.CategoriesList, "--Search By Category--")
+    <input type="submit" value="Search" />
+    <br />
+    <br />
+
+    <div class="table-responsive">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Creation Date
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th>
+                        Duration In Hours
+                    </th>
+
+                    <th>Edit</th>
+                    <th>Details</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DurationInHours)
+                        </td>
+
+                        <td class="text-center">
+                            <a asp-action="Edit" class="btn btn-outline-primary" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="Details" class="btn btn-outline-info" asp-route-id="@item.Id">Details</a>
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
