@@ -1,5 +1,4 @@
 ﻿using ProductCatalog.Data.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +41,6 @@ namespace ProductCatalog.Repo
             { 
                 product.Name = entity.Name;
                 product.StartDate = entity.StartDate;
-                product.Name=entity.Name;
                 product.DurationInHours = entity.DurationInHours;
                 product.Price= entity.Price;
             }

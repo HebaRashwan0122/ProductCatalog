@@ -167,7 +167,6 @@ namespace ProductCatalog.Service
             {
                 _logger.LogError($"Error {ex.Message}");
             }
-
         }
     }
 }

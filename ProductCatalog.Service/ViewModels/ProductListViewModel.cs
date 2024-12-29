@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace ProductCatalog.Service.ViewModels
+﻿namespace ProductCatalog.Service.ViewModels
 {
     public class ProductListViewModel
     {
